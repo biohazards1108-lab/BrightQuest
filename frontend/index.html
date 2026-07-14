@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BrightQuest</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>BrightQuest</h1>
+    <p>A safe place for kids to play and learn.</p>
+  </header>
+
+  <main>
+    <section id="age-select">
+      <h2>Select your age</h2>
+      <input type="number" id="age-input" min="4" max="18" placeholder="Enter your age">
+      <button id="age-button">Show Games</button>
+      <p id="age-error" class="error"></p>
+    </section>
+
+    <section id="games-section">
+      <h2>Games for you</h2>
+      <ul id="games-list"></ul>
+    </section>
+
+    <section id="chat-section">
+      <h2>Teen Chat (13–18)</h2>
+      <p class="note">Be kind. No bullying. No sharing personal info.</p>
+
+      <div id="chat-box">
+        <ul id="chat-messages"></ul>
+      </div>
+
+      <div id="chat-input-area">
+        <input type="text" id="chat-user-id" placeholder="Nickname">
+        <input type="text" id="chat-message" placeholder="Type your message">
+        <button id="chat-send">Send</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>BrightQuest © 2026</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
