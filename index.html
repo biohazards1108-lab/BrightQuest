@@ -5,74 +5,91 @@
   <title>BrightQuest</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-  <!-- HERO SECTION -->
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <div class="logo">BrightQuest</div>
+
+    <div class="auth-buttons">
+      <button id="login-open">Login</button>
+      <button id="signup-open">Create Profile</button>
+    </div>
+  </nav>
+
+  <!-- HERO WITH JOHNNY -->
   <header class="hero">
-    <h1>BrightQuest</h1>
-    <p class="tagline">A safe, fun place for kids to play and learn</p>
+    <div class="dragon-container">
+      <img src="johnny-dragon.gif" alt="Johnny the Dragon" class="dragon">
+
+      <div class="speech-bubble" id="speech-bubble">
+        Hi there! I’m Johnny the Dragon.  
+        Welcome to BrightQuest — let’s go on an adventure!
+      </div>
+    </div>
   </header>
 
-  <main>
-<section class="card" id="auth-section">
-  <h2>Welcome to BrightQuest</h2>
+  <!-- AUTH POPUP -->
+  <div id="auth-popup" class="popup hidden">
+    <div class="popup-content">
+      <span id="popup-close" class="close-btn">×</span>
 
-  <div id="signup-area">
-    <h3>Create Profile</h3>
-    <input type="text" id="signup-username" placeholder="Choose a username">
-    <input type="number" id="signup-age" min="4" max="18" placeholder="Your age">
-    <button id="signup-button">Create Profile</button>
-    <p id="signup-error" class="error"></p>
+      <h2 id="popup-title">Login</h2>
+
+      <div id="signup-area" class="hidden">
+        <input type="text" id="signup-username" placeholder="Choose a username">
+        <input type="number" id="signup-age" min="4" max="18" placeholder="Your age">
+        <button id="signup-button">Create Profile</button>
+        <p id="signup-error" class="error"></p>
+      </div>
+
+      <div id="login-area">
+        <input type="text" id="login-username" placeholder="Enter your username">
+        <button id="login-button">Login</button>
+        <p id="login-error" class="error"></p>
+      </div>
+    </div>
   </div>
 
-  <hr>
+  <!-- AGE SELECTOR -->
+  <section class="card">
+    <h2>Choose Your Age</h2>
+    <p class="subtext">Johnny will guide you to games made just for you</p>
 
-  <div id="login-area">
-    <h3>Login</h3>
-    <input type="text" id="login-username" placeholder="Enter your username">
-    <button id="login-button">Login</button>
-    <p id="login-error" class="error"></p>
-  </div>
-</section>
+    <div class="age-input-area">
+      <input type="number" id="age-input" min="4" max="18" placeholder="Enter your age">
+      <button id="age-button">Find Games</button>
+    </div>
 
-    <!-- AGE SELECTOR -->
-    <section class="card">
-      <h2>Choose Your Age</h2>
-      <p class="subtext">We’ll show games made just for you</p>
+    <p id="age-error" class="error"></p>
+  </section>
 
-      <div class="age-input-area">
-        <input type="number" id="age-input" min="4" max="18" placeholder="Enter your age">
-        <button id="age-button">Find Games</button>
-      </div>
+  <!-- GAMES WORLD -->
+  <section class="card">
+    <h2>Games World</h2>
+    <p class="subtext">Johnny is preparing your adventure...</p>
 
-      <p id="age-error" class="error"></p>
-    </section>
+    <div id="games-container" class="games-grid">
+      <!-- Game cards will be inserted here -->
+    </div>
+  </section>
 
-    <!-- GAME LIST -->
-    <section class="card">
-      <h2>Your Games</h2>
-      <div id="games-container" class="games-grid">
-        <!-- Game cards will be inserted here -->
-      </div>
-    </section>
+  <!-- TEEN CHAT -->
+  <section id="chat-section" class="card">
+    <h2>Teen Chat (13–18)</h2>
+    <p class="note">Be kind. No bullying. No sharing personal info.</p>
 
-    <!-- TEEN CHAT -->
-    <section id="chat-section" class="card">
-      <h2>Teen Chat (13–18)</h2>
-      <p class="note">Be kind. No bullying. No sharing personal info.</p>
+    <div id="chat-box" class="chat-box">
+      <ul id="chat-messages"></ul>
+    </div>
 
-      <div id="chat-box" class="chat-box">
-        <ul id="chat-messages"></ul>
-      </div>
-
-      <div class="chat-input-area">
-        <input type="text" id="chat-user-id" placeholder="Nickname">
-        <input type="text" id="chat-message" placeholder="Type your message">
-        <button id="chat-send">Send</button>
-      </div>
-    </section>
-
-  </main>
+    <div class="chat-input-area">
+      <input type="text" id="chat-user-id" placeholder="Nickname">
+      <input type="text" id="chat-message" placeholder="Type your message">
+      <button id="chat-send">Send</button>
+    </div>
+  </section>
 
   <footer>
     <p>BrightQuest © 2026</p>
