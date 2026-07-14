@@ -1,6 +1,29 @@
 // ===============================
 // BrightQuest Frontend Script
 // ===============================
+// POPUP LOGIC
+const authPopup = document.getElementById("auth-popup");
+const loginOpen = document.getElementById("login-open");
+const signupOpen = document.getElementById("signup-open");
+const popupClose = document.getElementById("popup-close");
+
+loginOpen.addEventListener("click", () => {
+  authPopup.classList.remove("hidden");
+  document.getElementById("signup-area").classList.add("hidden");
+  document.getElementById("login-area").classList.remove("hidden");
+  document.getElementById("popup-title").textContent = "Login";
+});
+
+signupOpen.addEventListener("click", () => {
+  authPopup.classList.remove("hidden");
+  document.getElementById("signup-area").classList.remove("hidden");
+  document.getElementById("login-area").classList.add("hidden");
+  document.getElementById("popup-title").textContent = "Create Profile";
+});
+
+popupClose.addEventListener("click", () => {
+  authPopup.classList.add("hidden");
+});
 
 // IMPORTANT: Replace this with your Railway backend URL
 const API_BASE = "https://postgres-production-cf4ee.up.railway.app";
