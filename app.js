@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000'; // change to Railway URL when deployed
+const API_BASE = 'postgres-production-cf4ee.up.railway.app'; // change to Railway URL when deployed
 
 const ageInput = document.getElementById('age-input');
 const ageButton = document.getElementById('age-button');
