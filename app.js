@@ -129,3 +129,86 @@ chatSend.addEventListener("click", async () => {
     alert("Could not send message.");
   }
 });
+// ===============================
+// LOGIN + SIGNUP
+// ===============================
+
+const signupUsername = document.getElementById("signup-username");
+const signupAge = document.getElementById("signup-age");
+const signupButton = document.getElementById("signup-button");
+const signupError = document.getElementById("signup-error");
+
+const loginUsername = document.getElementById("login-username");
+const loginButton = document.getElementById("login-button");
+const loginError = document.getElementById("login-error");
+
+let currentUser = null;
+
+// SIGNUP
+signupButton.addEventListener("click", async () => {
+  const username = signupUsername.value.trim();
+  const age = parseInt(signupAge.value);
+
+  if (!username || isNaN(age)) {
+    signupError.textContent = "Please enter a username and age.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, age })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      signupError.textContent = "Username already exists.";
+      return;
+    }
+
+    currentUser = data.user;
+    loadUserProfile();
+  } catch {
+    signupError.textContent = "Could not create profile.";
+  }
+});
+
+// LOGIN
+loginButton.addEventListener("click", async () => {
+  const username = loginUsername.value.trim();
+
+  if (!username) {
+    loginError.textContent = "Enter your username.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      loginError.textContent = "Profile not found.";
+      return;
+    }
+
+    currentUser = data.user;
+    loadUserProfile();
+  } catch {
+    loginError.textContent = "Could not login.";
+  }
+});
+
+// LOAD USER PROFILE
+function loadUserProfile() {
+  document.getElementById("auth-section").style.display = "none";
+
+  ageInput.value = currentUser.age;
+  ageButton.click();
+}
