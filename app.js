@@ -2,10 +2,37 @@
 // BrightQuest Frontend Script
 // ===============================
 
-// IMPORTANT: set this to your Railway backend URL
+// ===============================
+// Johnny the Dragon Auto Speech
+// ===============================
+
+window.addEventListener("load", () => {
+  const bubble = document.getElementById("speech-bubble");
+  if (!bubble) return;
+
+  bubble.style.opacity = "0";
+  bubble.style.transform = "scale(0.8)";
+
+  setTimeout(() => {
+    bubble.style.transition = "opacity 1s ease, transform 1s ease";
+    bubble.style.opacity = "1";
+    bubble.style.transform = "scale(1)";
+  }, 600);
+
+  setTimeout(() => {
+    bubble.textContent = "Let’s find the perfect games for your age!";
+  }, 5000);
+});
+
+// ===============================
+// Backend URL
+// ===============================
+
 const API_BASE = "https://postgres-production-cf4ee.up.railway.app";
 
-// ---------- POPUP / AUTH UI ----------
+// ===============================
+// POPUP / AUTH UI
+// ===============================
 
 const authPopup = document.getElementById("auth-popup");
 const loginOpen = document.getElementById("login-open");
@@ -27,6 +54,7 @@ const loginError = document.getElementById("login-error");
 
 let currentUser = null;
 
+// Open Login Popup
 loginOpen.addEventListener("click", () => {
   authPopup.classList.remove("hidden");
   signupArea.classList.add("hidden");
@@ -34,6 +62,7 @@ loginOpen.addEventListener("click", () => {
   popupTitle.textContent = "Login";
 });
 
+// Open Signup Popup
 signupOpen.addEventListener("click", () => {
   authPopup.classList.remove("hidden");
   signupArea.classList.remove("hidden");
@@ -41,11 +70,14 @@ signupOpen.addEventListener("click", () => {
   popupTitle.textContent = "Create Profile";
 });
 
+// Close Popup
 popupClose.addEventListener("click", () => {
   authPopup.classList.add("hidden");
 });
 
-// ---------- SIGNUP / LOGIN LOGIC ----------
+// ===============================
+// SIGNUP
+// ===============================
 
 signupButton.addEventListener("click", async () => {
   const username = signupUsername.value.trim();
@@ -74,10 +106,14 @@ signupButton.addEventListener("click", async () => {
 
     currentUser = data.user;
     loadUserProfile();
-  } catch (err) {
+  } catch {
     signupError.textContent = "Could not create profile.";
   }
 });
+
+// ===============================
+// LOGIN
+// ===============================
 
 loginButton.addEventListener("click", async () => {
   const username = loginUsername.value.trim();
@@ -105,20 +141,27 @@ loginButton.addEventListener("click", async () => {
 
     currentUser = data.user;
     loadUserProfile();
-  } catch (err) {
+  } catch {
     loginError.textContent = "Could not login.";
   }
 });
 
+// ===============================
+// LOAD USER PROFILE
+// ===============================
+
 function loadUserProfile() {
   authPopup.classList.add("hidden");
+
   if (currentUser && currentUser.age) {
     ageInput.value = currentUser.age;
     ageButton.click();
   }
 }
 
-// ---------- AGE → GAMES ----------
+// ===============================
+// AGE → GAMES
+// ===============================
 
 const ageInput = document.getElementById("age-input");
 const ageButton = document.getElementById("age-button");
@@ -150,7 +193,7 @@ ageButton.addEventListener("click", async () => {
     const res = await fetch(`${API_BASE}/games/${age}`);
     const games = await res.json();
     displayGames(games);
-  } catch (err) {
+  } catch {
     gamesContainer.innerHTML = "<p>Could not load games. Please try again.</p>";
   }
 });
@@ -176,7 +219,9 @@ function displayGames(games) {
   });
 }
 
-// ---------- CHAT ----------
+// ===============================
+// CHAT
+// ===============================
 
 const chatMessages = document.getElementById("chat-messages");
 const chatUserId = document.getElementById("chat-user-id");
@@ -196,7 +241,7 @@ async function loadChatMessages() {
       li.textContent = `${name}: ${msg.message}`;
       chatMessages.appendChild(li);
     });
-  } catch (err) {
+  } catch {
     chatMessages.innerHTML = "<li>Could not load chat.</li>";
   }
 }
@@ -222,7 +267,7 @@ chatSend.addEventListener("click", async () => {
 
     chatMessage.value = "";
     loadChatMessages();
-  } catch (err) {
+  } catch {
     alert("Could not send message.");
   }
 });
