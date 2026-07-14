@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import gamesRoutes from './routes/games.js';
 import chatRoutes from './routes/chat.js';
+import authRoutes from "./routes/auth.js";
+app.use("/auth", authRoutes);
 
 const app = express();
 app.use(cors());
