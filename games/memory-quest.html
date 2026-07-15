@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrightQuest | Memory Quest</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <style>
+        .mq-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .mq-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .mq-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .mq-card {
+            width: 100%;
+            height: 120px;
+            background: #4a6cf7;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+
+        .mq-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .mq-card .front,
+        .mq-card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .mq-card .front {
+            background: #4a6cf7;
+            color: #fff;
+        }
+
+        .mq-card .back {
+            background: #fff;
+            border: 2px solid #4a6cf7;
+            transform: rotateY(180deg);
+        }
+
+        .mq-message {
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+        }
+
+        .mq-message.good {
+            color: #2ecc71;
+        }
+
+        .mq-message.bad {
+            color: #e74c3c;
+        }
+
+        .mq-gameover {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+
+        .mq-buttons {
+            margin-top: 20px;
+        }
+
+        .mq-buttons button {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .btn-reset {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .mq-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="../assets/images/brightquest-logo.png" alt="BrightQuest Logo" class="logo">
+            <h1 class="site-title">BrightQuest</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="games.html" class="active">Games</a></li>
+            <li><a href="../learn.html">Learn</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <main class="mq-container">
+        <h2>Memory Quest</h2>
+        <p>Flip cards and match pairs before you run out of lives.</p>
+
+        <div class="mq-stats">
+            <div>⭐ Score: <span id="score">0</span></div>
+            <div>❤️ Lives: <span id="lives">5</span></div>
+            <div>🎯 Matches: <span id="matches">0</span>/8</div>
+        </div>
+
+        <div class="mq-grid" id="grid"></div>
+
+        <div class="mq-message" id="message"></div>
+        <div class="mq-gameover" id="gameover"></div>
+
+        <div class="mq-buttons">
+            <button class="btn-reset" id="resetBtn">Reset Game</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
+    </footer>
+
+    <script>
+        const grid = document.getElementById("grid");
+        const scoreEl = document.getElementById("score");
+        const livesEl = document.getElementById("lives");
+        const matchesEl = document.getElementById("matches");
+        const messageEl = document.getElementById("message");
+        const gameoverEl = document.getElementById("gameover");
+        const resetBtn = document.getElementById("resetBtn");
+
+        let score = 0;
+        let lives = 5;
+        let matches = 0;
+        let flippedCards = [];
+        let lockBoard = false;
+
+        const icons = ["🍎","⭐","🔥","🎈","⚡","🌙","🎵","🎁"];
+        let deck = [];
+
+        function createDeck() {
+            deck = [...icons, ...icons]
+                .sort(() => Math.random() - 0.5)
+                .map(icon => ({ icon, matched: false }));
+        }
+
+        function renderGrid() {
+            grid.innerHTML = "";
+            deck.forEach((card, index) => {
+                const cardEl = document.createElement("div");
+                cardEl.classList.add("mq-card");
+                cardEl.dataset.index = index;
+
+                cardEl.innerHTML = `
+                    <div class="front"></div>
+                    <div class="back">${card.icon}</div>
+                `;
+
+                cardEl.addEventListener("click", () => flipCard(cardEl));
+                grid.appendChild(cardEl);
+            });
+        }
+
+        function flipCard(cardEl) {
+            if (lockBoard) return;
+            const index = cardEl.dataset.index;
+            const card = deck[index];
+
+            if (card.matched || flippedCards.includes(cardEl)) return;
+
+            cardEl.classList.add("flipped");
+            flippedCards.push(cardEl);
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            lockBoard = true;
+
+            const [cardA, cardB] = flippedCards;
+            const aIndex = cardA.dataset.index;
+            const bIndex = cardB.dataset.index;
+
+            if (deck[aIndex].icon === deck[bIndex].icon) {
+                deck[aIndex].matched = true;
+                deck[bIndex].matched = true;
+
+                score += 20;
+                matches += 1;
+
+                scoreEl.textContent = score;
+                matchesEl.textContent = matches;
+
+                messageEl.textContent = "Nice! You found a match.";
+                messageEl.className = "mq-message good";
+
+                if (matches === 8) {
+                    gameoverEl.textContent = "You win! Great memory!";
+                }
+            } else {
+                lives -= 1;
+                livesEl.textContent = lives;
+
+                messageEl.textContent = "Not a match!";
+                messageEl.className = "mq-message bad";
+
+                setTimeout(() => {
+                    cardA.classList.remove("flipped");
+                    cardB.classList.remove("flipped");
+                }, 700);
+
+                if (lives <= 0) {
+                    gameoverEl.textContent = "Game Over — You ran out of lives.";
+                    lockBoard = true;
+                    return;
+                }
+            }
+
+            flippedCards = [];
+            lockBoard = false;
+        }
+
+        function resetGame() {
+            score = 0;
+            lives = 5;
+            matches = 0;
+            flippedCards = [];
+            lockBoard = false;
+
+            scoreEl.textContent = score;
+            livesEl.textContent = lives;
+            matchesEl.textContent = matches;
+            messageEl.textContent = "";
+            gameoverEl.textContent = "";
+
+            createDeck();
+            renderGrid();
+        }
+
+        resetBtn.addEventListener("click", resetGame);
+
+        resetGame();
+    </script>
+</body>
+</html>
