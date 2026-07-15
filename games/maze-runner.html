@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrightQuest | Maze Runner</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <style>
+        .mr-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .mr-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .mr-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 32px);
+            gap: 4px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .mr-cell {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+        }
+
+        .mr-wall {
+            background: #4a6cf7;
+        }
+
+        .mr-path {
+            background: #e8ecff;
+        }
+
+        .mr-player {
+            background: #2ecc71;
+        }
+
+        .mr-goal {
+            background: #f1c40f;
+        }
+
+        .mr-message {
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+        }
+
+        .mr-gameover {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #4a6cf7;
+        }
+
+        .btn-reset {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .mr-grid {
+                transform: scale(0.9);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="../assets/images/brightquest-logo.png" alt="BrightQuest Logo" class="logo">
+            <h1 class="site-title">BrightQuest</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="games.html" class="active">Games</a></li>
+            <li><a href="../learn.html">Learn</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <main class="mr-container">
+        <h2>Maze Runner</h2>
+        <p>Use the arrow keys to reach the goal without hitting walls.</p>
+
+        <div class="mr-stats">
+            <div>🎯 Moves: <span id="moves">0</span></div>
+            <div>⏱ Time: <span id="time">0</span>s</div>
+        </div>
+
+        <div class="mr-grid" id="grid"></div>
+
+        <div class="mr-message" id="message"></div>
+        <div class="mr-gameover" id="gameover"></div>
+
+        <button class="btn-reset" id="resetBtn">Reset Game</button>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
+    </footer>
+
+    <script>
+        const gridEl = document.getElementById("grid");
+        const movesEl = document.getElementById("moves");
+        const timeEl = document.getElementById("time");
+        const messageEl = document.getElementById("message");
+        const gameoverEl = document.getElementById("gameover");
+        const resetBtn = document.getElementById("resetBtn");
+
+        const ROWS = 10;
+        const COLS = 10;
+
+        // 0 = path, 1 = wall
+        const MAZE = [
+            [0,1,0,0,0,0,1,0,0,0],
+            [0,1,0,1,1,0,1,0,1,0],
+            [0,0,0,1,0,0,0,0,1,0],
+            [1,1,0,1,0,1,1,0,1,0],
+            [0,0,0,0,0,1,0,0,0,0],
+            [0,1,1,1,0,1,0,1,1,0],
+            [0,0,0,1,0,0,0,1,0,0],
+            [1,0,1,1,1,0,1,1,0,1],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,1,1,1,1,1,1,1,1,0]
+        ];
+
+        let player = { row: 0, col: 0 };
+        const goal = { row: 9, col: 9 };
+        let moves = 0;
+        let time = 0;
+        let timer = null;
+        let gameActive = false;
+
+        function renderGrid() {
+            gridEl.innerHTML = "";
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("mr-cell");
+
+                    if (r === player.row && c === player.col) {
+                        cell.classList.add("mr-player");
+                    } else if (r === goal.row && c === goal.col) {
+                        cell.classList.add("mr-goal");
+                    } else if (MAZE[r][c] === 1) {
+                        cell.classList.add("mr-wall");
+                    } else {
+                        cell.classList.add("mr-path");
+                    }
+
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+
+        function startTimer() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => {
+                if (!gameActive) return;
+                time++;
+                timeEl.textContent = time;
+            }, 1000);
+        }
+
+        function startGame() {
+            player = { row: 0, col: 0 };
+            moves = 0;
+            time = 0;
+            gameActive = true;
+            movesEl.textContent = moves;
+            timeEl.textContent = time;
+            messageEl.textContent = "";
+            gameoverEl.textContent = "";
+            renderGrid();
+            startTimer();
+        }
+
+        function handleMove(dr, dc) {
+            if (!gameActive) return;
+
+            const newRow = player.row + dr;
+            const newCol = player.col + dc;
+
+            if (newRow < 0 || newRow >= ROWS || newCol < 0 || newCol >= COLS) {
+                messageEl.textContent = "You hit the edge!";
+                return;
+            }
+
+            if (MAZE[newRow][newCol] === 1) {
+                messageEl.textContent = "You bumped into a wall!";
+                return;
+            }
+
+            player.row = newRow;
+            player.col = newCol;
+            moves++;
+            movesEl.textContent = moves;
+            messageEl.textContent = "";
+
+            renderGrid();
+
+            if (player.row === goal.row && player.col === goal.col) {
+                gameActive = false;
+                clearInterval(timer);
+                gameoverEl.textContent = `You reached the goal in ${moves} moves and ${time}s!`;
+            }
+        }
+
+        function resetGame() {
+            clearInterval(timer);
+            startGame();
+        }
+
+        document.addEventListener("keydown", (e) => {
+            switch (e.key) {
+                case "ArrowUp":
+                    handleMove(-1, 0);
+                    break;
+                case "ArrowDown":
+                    handleMove(1, 0);
+                    break;
+                case "ArrowLeft":
+                    handleMove(0, -1);
+                    break;
+                case "ArrowRight":
+                    handleMove(0, 1);
+                    break;
+            }
+        });
+
+        resetBtn.addEventListener("click", resetGame);
+
+        startGame();
+    </script>
+</body>
+</html>
