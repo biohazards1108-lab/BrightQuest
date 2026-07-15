@@ -6,6 +6,10 @@
     <title>BrightQuest</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+<script>
+    const age = localStorage.getItem("ageGroup");
+    if (!age) window.location.href = "age-gate.html";
+</script>
 
 <body>
     <!-- NAVBAR -->
