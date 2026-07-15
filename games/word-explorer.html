@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrightQuest | Word Explorer</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <style>
+        .we-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .we-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        .we-cell {
+            background: #e8ecff;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .we-cell.selected {
+            background: #4a6cf7;
+            color: #fff;
+        }
+
+        .we-cell.found {
+            background: #2ecc71;
+            color: #fff;
+        }
+
+        .we-word-list {
+            margin-top: 20px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .we-word-list li {
+            font-size: 18px;
+            margin: 6px 0;
+            font-weight: 600;
+        }
+
+        .we-word-list li.found {
+            color: #2ecc71;
+            text-decoration: line-through;
+        }
+
+        .we-message {
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+        }
+
+        .we-message.good {
+            color: #2ecc71;
+        }
+
+        .we-message.bad {
+            color: #e74c3c;
+        }
+
+        .we-gameover {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #4a6cf7;
+        }
+
+        .btn-reset {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="../assets/images/brightquest-logo.png" alt="BrightQuest Logo" class="logo">
+            <h1 class="site-title">BrightQuest</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="games.html" class="active">Games</a></li>
+            <li><a href="../learn.html">Learn</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <main class="we-container">
+        <h2>Word Explorer</h2>
+        <p>Find all hidden words in the puzzle!</p>
+
+        <div class="we-grid" id="grid"></div>
+
+        <h3>Words to Find:</h3>
+        <ul class="we-word-list" id="wordList"></ul>
+
+        <div class="we-message" id="message"></div>
+        <div class="we-gameover" id="gameover"></div>
+
+        <button class="btn-reset" id="resetBtn">Reset Game</button>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
+    </footer>
+
+    <script>
+        const gridEl = document.getElementById("grid");
+        const wordListEl = document.getElementById("wordList");
+        const messageEl = document.getElementById("message");
+        const gameoverEl = document.getElementById("gameover");
+        const resetBtn = document.getElementById("resetBtn");
+
+        const WORDS = ["STAR", "MOON", "FIRE", "GIFT", "NOTE", "APPLE", "CLOUD", "WIND"];
+        let grid = [];
+        let selectedCells = [];
+        let foundWords = new Set();
+
+        function generateGrid() {
+            grid = Array(10).fill(null).map(() => Array(10).fill(""));
+            placeWords();
+            fillRandomLetters();
+        }
+
+        function placeWords() {
+            WORDS.forEach(word => {
+                let placed = false;
+                while (!placed) {
+                    const row = Math.floor(Math.random() * 10);
+                    const col = Math.floor(Math.random() * (10 - word.length));
+                    if (canPlaceWord(row, col, word)) {
+                        for (let i = 0; i < word.length; i++) {
+                            grid[row][col + i] = word[i];
+                        }
+                        placed = true;
+                    }
+                }
+            });
+        }
+
+        function canPlaceWord(row, col, word) {
+            for (let i = 0; i < word.length; i++) {
+                if (grid[row][col + i] !== "") return false;
+            }
+            return true;
+        }
+
+        function fillRandomLetters() {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 10; c++) {
+                    if (grid[r][c] === "") {
+                        grid[r][c] = alphabet[Math.floor(Math.random() * alphabet.length)];
+                    }
+                }
+            }
+        }
+
+        function renderGrid() {
+            gridEl.innerHTML = "";
+            for (let r = 0; r < 10; r++) {
+                for (let c = 0; c < 10; c++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("we-cell");
+                    cell.textContent = grid[r][c];
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+
+                    cell.addEventListener("click", () => selectCell(cell));
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+
+        function renderWordList() {
+            wordListEl.innerHTML = "";
+            WORDS.forEach(word => {
+                const li = document.createElement("li");
+                li.textContent = word;
+                li.id = "word-" + word;
+                wordListEl.appendChild(li);
+            });
+        }
+
+        function selectCell(cell) {
+            if (cell.classList.contains("found")) return;
+
+            cell.classList.toggle("selected");
+
+            if (cell.classList.contains("selected")) {
+                selectedCells.push(cell);
+            } else {
+                selectedCells = selectedCells.filter(c => c !== cell);
+            }
+
+            checkSelection();
+        }
+
+        function checkSelection() {
+            const letters = selectedCells.map(c => c.textContent).join("");
+
+            if (WORDS.includes(letters)) {
+                foundWords.add(letters);
+
+                selectedCells.forEach(c => {
+                    c.classList.remove("selected");
+                    c.classList.add("found");
+                });
+
+                document.getElementById("word-" + letters).classList.add("found");
+
+                messageEl.textContent = "You found: " + letters;
+                messageEl.className = "we-message good";
+
+                selectedCells = [];
+
+                if (foundWords.size === WORDS.length) {
+                    gameoverEl.textContent = "You found all words! Great job!";
+                }
+            } else if (letters.length >= 8) {
+                messageEl.textContent = "Not a word!";
+                messageEl.className = "we-message bad";
+
+                selectedCells.forEach(c => c.classList.remove("selected"));
+                selectedCells = [];
+            }
+        }
+
+        function resetGame() {
+            foundWords.clear();
+            selectedCells = [];
+            messageEl.textContent = "";
+            gameoverEl.textContent = "";
+
+            generateGrid();
+            renderGrid();
+            renderWordList();
+        }
+
+        resetBtn.addEventListener("click", resetGame);
+
+        resetGame();
+    </script>
+</body>
+</html>
