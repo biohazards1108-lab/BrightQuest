@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrightQuest | Color Match</title>
+    <link rel="stylesheet" href="../styles.css" />
+
+    <style>
+        .cm-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .cm-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .cm-prompt {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .cm-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 120px);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .cm-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.15s;
+        }
+
+        .cm-btn:active {
+            transform: scale(0.92);
+        }
+
+        .cm-message {
+            margin-top: 15px;
+            font-weight: 600;
+            min-height: 24px;
+        }
+
+        .cm-message.good {
+            color: #2ecc71;
+        }
+
+        .cm-message.bad {
+            color: #e74c3c;
+        }
+
+        .cm-gameover {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #4a6cf7;
+        }
+
+        .btn-reset {
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .cm-grid {
+                grid-template-columns: repeat(2, 120px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="../assets/images/brightquest-logo.png" alt="BrightQuest Logo" class="logo">
+            <h1 class="site-title">BrightQuest</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="games/games.html" class="active">Games</a></li>
+            <li><a href="../learn.html">Learn</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <main class="cm-container">
+        <h2>Color Match</h2>
+        <p>Tap the correct color as fast as you can!</p>
+
+        <div class="cm-stats">
+            <div>⭐ Score: <span id="score">0</span></div>
+            <div>⏱ Time: <span id="time">30</span>s</div>
+        </div>
+
+        <div class="cm-prompt">
+            Tap: <span id="promptColor">RED</span>
+        </div>
+
+        <div class="cm-grid" id="grid"></div>
+
+        <div class="cm-message" id="message"></div>
+        <div class="cm-gameover" id="gameover"></div>
+
+        <button class="btn-reset" id="resetBtn">Reset Game</button>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
+    </footer>
+
+    <script>
+        const COLORS = [
+            { name: "RED", hex: "#e74c3c" },
+            { name: "BLUE", hex: "#3498db" },
+            { name: "GREEN", hex: "#2ecc71" },
+            { name: "YELLOW", hex: "#f1c40f" },
+            { name: "PURPLE", hex: "#9b59b6" },
+            { name: "ORANGE", hex: "#e67e22" }
+        ];
+
+        const gridEl = document.getElementById("grid");
+        const promptEl = document.getElementById("promptColor");
+        const scoreEl = document.getElementById("score");
+        const timeEl = document.getElementById("time");
+        const messageEl = document.getElementById("message");
+        const gameoverEl = document.getElementById("gameover");
+        const resetBtn = document.getElementById("resetBtn");
+
+        let score = 0;
+        let time = 30;
+        let timer = null;
+        let gameActive = false;
+        let currentColor = null;
+
+        function startTimer() {
+            timer = setInterval(() => {
+                if (!gameActive) return;
+                time--;
+                timeEl.textContent = time;
+
+                if (time <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function generatePrompt() {
+            currentColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+            promptEl.textContent = currentColor.name;
+        }
+
+        function renderButtons() {
+            gridEl.innerHTML = "";
+            COLORS.forEach(color => {
+                const btn = document.createElement("button");
+                btn.classList.add("cm-btn");
+                btn.style.background = color.hex;
+                btn.dataset.color = color.name;
+
+                btn.addEventListener("click", () => handleClick(color.name));
+
+                gridEl.appendChild(btn);
+            });
+        }
+
+        function handleClick(colorName) {
+            if (!gameActive) return;
+
+            if (colorName === currentColor.name) {
+                score += 5;
+                scoreEl.textContent = score;
+                messageEl.textContent = "Correct!";
+                messageEl.className = "cm-message good";
+            } else {
+                messageEl.textContent = "Oops! Wrong color.";
+                messageEl.className = "cm-message bad";
+            }
+
+            generatePrompt();
+        }
+
+        function startGame() {
+            score = 0;
+            time = 30;
+            gameActive = true;
+
+            scoreEl.textContent = score;
+            timeEl.textContent = time;
+            messageEl.textContent = "";
+            gameoverEl.textContent = "";
+
+            renderButtons();
+            generatePrompt();
+            startTimer();
+        }
+
+        function endGame() {
+            gameActive = false;
+            clearInterval(timer);
+            gameoverEl.textContent = `Time's up! Final Score: ${score}`;
+        }
+
+        function resetGame() {
+            clearInterval(timer);
+            startGame();
+        }
+
+        resetBtn.addEventListener("click", resetGame);
+
+        startGame();
+    </script>
+</body>
+</html>
