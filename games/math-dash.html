@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrightQuest | Math Dash</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+        .mathdash-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            padding: 25px 20px 30px;
+            text-align: center;
+        }
+
+        .mathdash-header {
+            margin-bottom: 20px;
+        }
+
+        .mathdash-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .mathdash-question {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .mathdash-input {
+            margin: 15px 0;
+        }
+
+        .mathdash-input input {
+            padding: 10px 14px;
+            font-size: 18px;
+            width: 120px;
+            text-align: center;
+            border-radius: 8px;
+            border: 2px solid #4a6cf7;
+        }
+
+        .mathdash-buttons {
+            margin-top: 15px;
+        }
+
+        .mathdash-buttons button {
+            padding: 10px 18px;
+            margin: 0 5px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-start {
+            background: #4a6cf7;
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: #2ecc71;
+            color: #fff;
+        }
+
+        .btn-reset {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .mathdash-message {
+            margin-top: 15px;
+            min-height: 24px;
+            font-weight: 600;
+        }
+
+        .mathdash-message.correct {
+            color: #2ecc71;
+        }
+
+        .mathdash-message.wrong {
+            color: #e74c3c;
+        }
+
+        .mathdash-gameover {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+
+        .disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .mathdash-stats {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="../assets/images/brightquest-logo.png" alt="BrightQuest Logo" class="logo">
+            <h1 class="site-title">BrightQuest</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="games.html" class="active">Games</a></li>
+            <li><a href="../learn.html">Learn</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- GAME CONTAINER -->
+    <main class="mathdash-container">
+        <div class="mathdash-header">
+            <h2>Math Dash</h2>
+            <p>Answer as many math questions as you can before the timer runs out!</p>
+        </div>
+
+        <div class="mathdash-stats">
+            <div>⏱ Time: <span id="time">60</span>s</div>
+            <div>⭐ Score: <span id="score">0</span></div>
+            <div>❤️ Lives: <span id="lives">3</span></div>
+        </div>
+
+        <div class="mathdash-question" id="question">Press "Start Game" to begin!</div>
+
+        <div class="mathdash-input">
+            <input type="number" id="answer" placeholder="Your answer" disabled />
+        </div>
+
+        <div class="mathdash-buttons">
+            <button class="btn-start" id="startBtn">Start Game</button>
+            <button class="btn-submit" id="submitBtn" disabled>Submit</button>
+            <button class="btn-reset" id="resetBtn">Reset</button>
+        </div>
+
+        <div class="mathdash-message" id="message"></div>
+        <div class="mathdash-gameover" id="gameover"></div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
+    </footer>
+
+    <script>
+        const timeEl = document.getElementById('time');
+        const scoreEl = document.getElementById('score');
+        const livesEl = document.getElementById('lives');
+        const questionEl = document.getElementById('question');
+        const answerInput = document.getElementById('answer');
+        const startBtn = document.getElementById('startBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const messageEl = document.getElementById('message');
+        const gameoverEl = document.getElementById('gameover');
+
+        let time = 60;
+        let score = 0;
+        let lives = 3;
+        let timer = null;
+        let currentAnswer = null;
+        let gameActive = false;
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateQuestion() {
+            const ops = ['+', '-', '*'];
+            const op = ops[randomInt(0, ops.length - 1)];
+            let a = randomInt(1, 12);
+            let b = randomInt(1, 12);
+
+            if (op === '-' && b > a) {
+                [a, b] = [b, a];
+            }
+
+            let questionText = `${a} ${op} ${b}`;
+            switch (op) {
+                case '+':
+                    currentAnswer = a + b;
+                    break;
+                case '-':
+                    currentAnswer = a - b;
+                    break;
+                case '*':
+                    currentAnswer = a * b;
+                    break;
+            }
+
+            questionEl.textContent = questionText;
+        }
+
+        function startTimer() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => {
+                if (!gameActive) return;
+                time--;
+                timeEl.textContent = time;
+                if (time <= 0) {
+                    endGame('Time is up!');
+                }
+            }, 1000);
+        }
+
+        function startGame() {
+            time = 60;
+            score = 0;
+            lives = 3;
+            gameActive = true;
+            gameoverEl.textContent = '';
+            messageEl.textContent = '';
+            messageEl.className = 'mathdash-message';
+
+            timeEl.textContent = time;
+            scoreEl.textContent = score;
+            livesEl.textContent = lives;
+
+            answerInput.disabled = false;
+            submitBtn.disabled = false;
+            answerInput.value = '';
+            answerInput.focus();
+
+            startTimer();
+            generateQuestion();
+        }
+
+        function endGame(reason) {
+            gameActive = false;
+            clearInterval(timer);
+            answerInput.disabled = true;
+            submitBtn.disabled = true;
+            gameoverEl.textContent = `Game Over — ${reason} Final Score: ${score}`;
+        }
+
+        function handleSubmit() {
+            if (!gameActive) return;
+
+            const userValue = parseInt(answerInput.value, 10);
+            if (isNaN(userValue)) {
+                messageEl.textContent = 'Enter a number!';
+                messageEl.className = 'mathdash-message wrong';
+                return;
+            }
+
+            if (userValue === currentAnswer) {
+                score += 10;
+                scoreEl.textContent = score;
+                time = Math.min(time + 3, 90); // small time bonus
+                timeEl.textContent = time;
+                messageEl.textContent = 'Correct! +10 points, +3s';
+                messageEl.className = 'mathdash-message correct';
+            } else {
+                lives -= 1;
+                livesEl.textContent = lives;
+                messageEl.textContent = `Wrong! The answer was ${currentAnswer}.`;
+                messageEl.className = 'mathdash-message wrong';
+                if (lives <= 0) {
+                    endGame('No lives left.');
+                    return;
+                }
+            }
+
+            answerInput.value = '';
+            answerInput.focus();
+            generateQuestion();
+        }
+
+        function resetGame() {
+            clearInterval(timer);
+            time = 60;
+            score = 0;
+            lives = 3;
+            gameActive = false;
+
+            timeEl.textContent = time;
+            scoreEl.textContent = score;
+            livesEl.textContent = lives;
+
+            questionEl.textContent = 'Press "Start Game" to begin!';
+            answerInput.value = '';
+            answerInput.disabled = true;
+            submitBtn.disabled = true;
+            messageEl.textContent = '';
+            messageEl.className = 'mathdash-message';
+            gameoverEl.textContent = '';
+        }
+
+        startBtn.addEventListener('click', startGame);
+        submitBtn.addEventListener('click', handleSubmit);
+        resetBtn.addEventListener('click', resetGame);
+
+        answerInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                handleSubmit();
+            }
+        });
+    </script>
+</body>
+</html>
