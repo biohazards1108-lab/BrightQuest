@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrightQuest | Age Gate</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <main class="age-container">
+        <h2>Select Your Age Group</h2>
+        <p>This helps us show the right games and learning content.</p>
+
+        <div class="age-buttons">
+            <button onclick="setAge('4-8')">Ages 4–8</button>
+            <button onclick="setAge('9-12')">Ages 9–12</button>
+           <button onclick="setAge('13-18')">Ages 13-18</button>
+  </div>
+  
+    </main>
+
+    <script>
+        function setAge(group) {
+            localStorage.setItem("ageGroup", group);
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
