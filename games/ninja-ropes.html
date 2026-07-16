@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ninja Ropes</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ffe4f0, #e0f7ff, #d9ffe2);
+        background-size: 300% 300%;
+        animation: bgMove 18s ease infinite;
+        text-align: center;
+        padding: 20px;
+    }
+
+    @keyframes bgMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    #game-area {
+        width: 600px;
+        height: 500px;
+        margin: 20px auto;
+        border: 3px solid #333;
+        border-radius: 20px;
+        background: #ffffffaa;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #ninja {
+        width: 60px;
+        height: 60px;
+        background: black;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 20px;
+        left: 270px;
+        transition: 0.2s;
+    }
+
+    .letter {
+        width: 60px;
+        height: 60px;
+        background: #4dabf7;
+        color: white;
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        position: absolute;
+    }
+
+    #word-display {
+        font-size: 28px;
+        margin-top: 20px;
+    }
+
+    #message {
+        font-size: 24px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>Ninja Ropes</h1>
+<p>Sling the ninja upward to collect letters and spell the word!</p>
+
+<div id="word-display"></div>
+
+<div id="game-area">
+    <div id="ninja"></div>
+</div>
+
+<div id="message"></div>
+
+<script>
+    const words = ["CAT", "DOG", "TREE", "GAME", "JUMP", "NINJA"];
+    let currentWord = "";
+    let collected = "";
+    const ninja = document.getElementById("ninja");
+    const gameArea = document.getElementById("game-area");
+    const message = document.getElementById("message");
+    const wordDisplay = document.getElementById("word-display");
+
+    function startGame() {
+        currentWord = words[Math.floor(Math.random() * words.length)];
+        collected = "";
+        wordDisplay.innerText = "Word: " + currentWord;
+        message.innerText = "";
+        spawnLetters();
+    }
+
+    function spawnLetters() {
+        gameArea.innerHTML = '<div id="ninja"></div>';
+        const ninja = document.getElementById("ninja");
+
+        for (let i = 0; i < currentWord.length; i++) {
+            const letter = document.createElement("div");
+            letter.className = "letter";
+            letter.innerText = currentWord[i];
+
+            letter.style.left = (Math.random() * 500) + "px";
+            letter.style.top = (Math.random() * 300) + "px";
+
+            gameArea.appendChild(letter);
+        }
+
+        gameArea.appendChild(ninja);
+
+        gameArea.addEventListener("click", (e) => {
+            const x = e.clientX - gameArea.offsetLeft;
+            const y = e.clientY - gameArea.offsetTop;
+
+            ninja.style.left = x + "px";
+            ninja.style.top = y + "px";
+
+            checkCollision(ninja);
+        });
+    }
+
+    function checkCollision(ninja) {
+        const letters = document.querySelectorAll(".letter");
+
+        letters.forEach(letter => {
+            const ninjaRect = ninja.getBoundingClientRect();
+            const letterRect = letter.getBoundingClientRect();
+
+            if (
+                ninjaRect.left < letterRect.right &&
+                ninjaRect.right > letterRect.left &&
+                ninjaRect.top < letterRect.bottom &&
+                ninjaRect.bottom > letterRect.top
+            ) {
+                collected += letter.innerText;
+                letter.remove();
+
+                if (collected === currentWord) {
+                    message.innerText = "Level Complete!";
+                    setTimeout(startGame, 1500);
+                }
+            }
+        });
+    }
+
+    startGame();
+</script>
+
+</body>
+</html>
