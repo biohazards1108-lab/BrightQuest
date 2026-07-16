@@ -6,25 +6,27 @@
     <title>BrightQuest</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <script>
     const age = localStorage.getItem("ageGroup");
     if (!age) window.location.href = "age-gate.html";
 </script>
 
 <body>
+
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-left">
             <img src="assets/images/brightQuest-logo.png" alt="BrightQuest Logo" class="logo">
             <h1 class="site-title">BrightQuest</h1>
         </div>
+
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="games/games.html">Games</a></li>
             <li><a href="learn.html">Learn</a></li>
             <li><a href="about.html">About</a></li>
-             </li><a href="library.html">Book Library</a>
-
+            <li><a href="library.html">Book Library</a></li>
         </ul>
     </nav>
 
@@ -38,11 +40,12 @@
     <!-- GAME PREVIEW SECTION -->
     <section class="games-preview">
         <h3>Featured Games</h3>
+
         <div class="game-grid">
 
             <!-- GAME CARD 1 -->
             <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Game Preview">
+                <img src="assets/images/game-placeholder.png" alt="Math Dash">
                 <h4>Math Dash</h4>
                 <p>Race against time to solve math puzzles.</p>
                 <a href="games/math-dash.html" class="play-btn">Play</a>
@@ -50,7 +53,7 @@
 
             <!-- GAME CARD 2 -->
             <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Game Preview">
+                <img src="assets/images/game-placeholder.png" alt="Word Explorer">
                 <h4>Word Explorer</h4>
                 <p>Build vocabulary while exploring new worlds.</p>
                 <a href="games/word-explorer.html" class="play-btn">Play</a>
@@ -58,34 +61,43 @@
 
             <!-- GAME CARD 3 -->
             <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Game Preview">
+                <img src="assets/images/game-placeholder.png" alt="Memory Quest">
                 <h4>Memory Quest</h4>
                 <p>Test your memory with fun challenges.</p>
                 <a href="games/memory-quest.html" class="play-btn">Play</a>
             </div>
+
+            <!-- GAME CARD 4 -->
             <div class="game-card">
-        <img src="../assets/images/game-placeholder.png" alt="Maze Runner">
-        <h4>Maze Runner</h4>
-        <p>Navigate the maze using the arrow keys and reach the goal.</p>
-        <a href="games/maze-runner.html" class="play-btn">Play</a>
-        </div>
-<div class="game-card">
-    <img src="../assets/images/game-placeholder.png" alt="Color Match">
-    <h4>Color Match</h4>
-    <p>Tap the correct color as fast as you can!</p>
-    <a href="games/color-match.html" class="play-btn">Play</a>
-</div>
-<a href="games/shape-builder.html" class="game-button">
-    Shape Builder
-</a>
-</div
-</a>
-<div class="game-card">
-    <h3>Ninja Ropes</h3>
-    <p>Sling the ninja upward to collect letters and spell words!</p>
-    <a href="games/ninja-ropes.html" class="game-button">
-    Ninja Ropes
-</div>
+                <img src="assets/images/game-placeholder.png" alt="Maze Runner">
+                <h4>Maze Runner</h4>
+                <p>Navigate the maze using the arrow keys and reach the goal.</p>
+                <a href="games/maze-runner.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- GAME CARD 5 -->
+            <div class="game-card">
+                <img src="assets/images/game-placeholder.png" alt="Color Match">
+                <h4>Color Match</h4>
+                <p>Tap the correct color as fast as you can!</p>
+                <a href="games/color-match.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- SHAPE BUILDER -->
+            <div class="game-card">
+                <img src="assets/images/game-placeholder.png" alt="Shape Builder">
+                <h4>Shape Builder</h4>
+                <p>Drag and drop shapes to complete fun puzzles!</p>
+                <a href="games/shape-builder.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- NINJA ROPES -->
+            <div class="game-card">
+                <img src="assets/images/game-placeholder.png" alt="Ninja Ropes">
+                <h4>Ninja Ropes</h4>
+                <p>Sling the ninja upward to collect letters and spell words!</p>
+                <a href="games/ninja-ropes.html" class="play-btn">Play</a>
+            </div>
 
         </div>
     </section>
