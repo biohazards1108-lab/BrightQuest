@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shape Builder</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ffefd5, #ffe4f0, #e0f7ff, #d9ffe2);
+        background-size: 300% 300%;
+        animation: bgMove 18s ease infinite;
+        text-align: center;
+        padding: 20px;
+    }
+
+    @keyframes bgMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    #game-area {
+        width: 600px;
+        height: 400px;
+        margin: 20px auto;
+        border: 3px solid #333;
+        border-radius: 20px;
+        background: #ffffffaa;
+        position: relative;
+    }
+
+    .shape {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        cursor: grab;
+    }
+
+    .circle {
+        background: #ff6b6b;
+        border-radius: 50%;
+    }
+
+    .square {
+        background: #4dabf7;
+    }
+
+    .triangle {
+        width: 0;
+        height: 0;
+        border-left: 40px solid transparent;
+        border-right: 40px solid transparent;
+        border-bottom: 80px solid #51cf66;
+    }
+
+    #target-area {
+        width: 200px;
+        height: 200px;
+        border: 3px dashed #555;
+        border-radius: 20px;
+        position: absolute;
+        right: 20px;
+        top: 100px;
+        background: #ffffff55;
+    }
+
+    #message {
+        font-size: 24px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>Shape Builder</h1>
+<p>Drag the shapes into the target area!</p>
+
+<div id="game-area">
+    <div id="target-area"></div>
+
+    <div class="shape circle" id="circle" style="left:20px; top:40px;"></div>
+    <div class="shape square" id="square" style="left:20px; top:150px;"></div>
+    <div class="shape triangle" id="triangle" style="left:20px; top:260px;"></div>
+</div>
+
+<div id="message"></div>
+
+<script>
+    const shapes = document.querySelectorAll('.shape');
+    const target = document.getElementById('target-area');
+    const message = document.getElementById('message');
+
+    shapes.forEach(shape => {
+        shape.addEventListener('mousedown', startDrag);
+    });
+
+    let activeShape = null;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    function startDrag(e) {
+        activeShape = e.target;
+        offsetX = e.clientX - activeShape.offsetLeft;
+        offsetY = e.clientY - activeShape.offsetTop;
+
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', stopDrag);
+    }
+
+    function drag(e) {
+        if (!activeShape) return;
+
+        activeShape.style.left = (e.clientX - offsetX) + 'px';
+        activeShape.style.top = (e.clientY - offsetY) + 'px';
+    }
+
+    function stopDrag() {
+        if (!activeShape) return;
+
+        const shapeRect = activeShape.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+
+        if (
+            shapeRect.left > targetRect.left &&
+            shapeRect.right < targetRect.right &&
+            shapeRect.top > targetRect.top &&
+            shapeRect.bottom < targetRect.bottom
+        ) {
+            message.innerText = "Great job! You placed a shape!";
+        }
+
+        activeShape = null;
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', stopDrag);
+    }
+</script>
+
+</body>
+</html>
