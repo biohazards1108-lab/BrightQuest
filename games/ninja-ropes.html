@@ -5,20 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninja Ropes</title>
 
-    <!-- Correct folder path -->
+    <!-- CSS from css/ -->
     <link rel="stylesheet" href="../css/ninja-ropes.css">
 </head>
-
 <body>
     <canvas id="gameCanvas"></canvas>
 
     <div class="ui">
-        <h2>Ninja Ropes</h2>
-        <p>Click to shoot a rope. Swing upward and collect letters!</p>
-        <div id="wordDisplay"></div>
+        <div class="ui-top">
+            <h2>Ninja Ropes</h2>
+            <p>Tap/click to shoot a rope. Swing, collect letters, and spell the target word!</p>
+        </div>
+
+        <div class="ui-middle">
+            <div class="label">Target word</div>
+            <div id="targetWord"></div>
+        </div>
+
+        <div class="ui-bottom">
+            <div class="label">Collected</div>
+            <div id="collectedWord"></div>
+            <div class="stats">
+                <span id="levelDisplay"></span>
+                <span id="scoreDisplay"></span>
+            </div>
+        </div>
     </div>
 
-    <!-- Correct folder path -->
+    <!-- JS from js/ -->
     <script src="../js/ninja-ropes.js"></script>
 </body>
 </html>
