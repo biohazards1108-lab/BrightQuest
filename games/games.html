@@ -1,76 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BrightQuest | Games</title>
-    <link rel="stylesheet" href="../styles.css" />
+
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Nunito", sans-serif;
+            background: radial-gradient(circle at top left, #e0f2fe, #fef3c7);
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            font-family: "Baloo 2";
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .game-card img {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .game-card h3 {
+            margin: 10px 0 6px;
+            font-size: 20px;
+        }
+
+        .game-card p {
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+
+        .play-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #4b7bec;
+            color: white;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="page">
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <img src="../assets/images/brightquest-logo.png" alt="BrightQuest Logo" class="logo">
-            <h1 class="site-title">BrightQuest</h1>
-        </div>
-        <ul class="nav-links">
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="games.html" class="active">Games</a></li>
-            <li><a href="../learn.html">Learn</a></li>
-            <li><a href="../about.html">About</a></li>
-        </ul>
-    </nav>
-
-    <!-- PAGE HEADER -->
-    <header class="hero small-hero">
-        <h2>Choose a Game</h2>
-        <p>Fun, safe, and educational games for kids of all ages.</p>
-    </header>
-
-    <!-- GAME LIST -->
-    <section class="games-preview">
-        <h3>All Games</h3>
+        <h1>BrightQuest Games</h1>
 
         <div class="game-grid">
 
-            <!-- GAME 1: MATH DASH -->
+            <!-- Math Dash -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Math Dash">
-                <h4>Math Dash</h4>
+                <h3>Math Dash</h3>
                 <p>Race against time to solve math puzzles.</p>
-                <a href="math-dash.html" class="play-btn">Play</a>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/math-dash.html" class="play-btn">Play</a>
             </div>
 
-            <!-- FUTURE GAMES -->
-     <div class="game-card">
-    <img src="../assets/images/game-placeholder.png" alt="Memory Quest">
-    <h4>Memory Quest</h4>
-    <p>Test your memory with fun card‑flip challenges.</p>
-    <a href="memory-quest.html" class="play-btn">Play</a>
-</div>
-<div class="game-card">
-    <img src="../assets/images/game-placeholder.png" alt="Word Explorer">
-    <h4>Word Explorer</h4>
-    <p>Find hidden words in a fun puzzle adventure.</p>
-    <a href="word-explorer.html" class="play-btn">Play</a>
-</div>
-<div class="game-card">
-    <img src="../assets/images/game-placeholder.png" alt="Maze Runner">
-    <h4>Maze Runner</h4>
-    <p>Navigate the maze using the arrow keys and reach the goal.</p>
-    <a href="maze-runner.html" class="play-btn">Play</a>
-</div>
+            <!-- Word Explorer -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Word Explorer">
+                <h3>Word Explorer</h3>
+                <p>Build vocabulary while exploring new worlds.</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/word-explorer.html" class="play-btn">Play</a>
+            </div>
 
+            <!-- Memory Quest -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Memory Quest">
+                <h3>Memory Quest</h3>
+                <p>Test your memory with fun challenges.</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/memory-quest.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- Maze Runner -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Maze Runner">
+                <h3>Maze Runner</h3>
+                <p>Navigate the maze using the arrow keys.</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/maze-runner.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- Color Match -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Color Match">
+                <h3>Color Match</h3>
+                <p>Tap the correct color as fast as you can!</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/color-match.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- Shape Builder -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Shape Builder">
+                <h3>Shape Builder</h3>
+                <p>Drag and drop shapes to complete puzzles.</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/shape-builder.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- Ninja Ropes -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Ninja Ropes">
+                <h3>Ninja Ropes</h3>
+                <p>Swing, climb, and collect letters to spell words!</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/ninja-ropes.html" class="play-btn">Play</a>
+            </div>
+
+            <!-- Games Menu (optional) -->
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Games Menu">
+                <h3>Games Menu</h3>
+                <p>Browse all BrightQuest games.</p>
+                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/games.html" class="play-btn">Open</a>
+            </div>
 
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
-    </footer>
-
+    </div>
 </body>
 </html>
