@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BrightQuest Library</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 
     <style>
         body {
-            margin: 0;
-            font-family: "Nunito", sans-serif;
             background: radial-gradient(circle at top left, #e0f2fe, #fef3c7);
-            color: #1f2937;
+            font-family: "Nunito", sans-serif;
+            margin: 0;
         }
 
         .page {
@@ -49,33 +46,12 @@
             margin: 0;
         }
 
-        .hero {
-            background: white;
-            padding: 20px;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        .section-title {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: 700;
         }
-
-        .books {
-            display: flex;
-            gap: 6px;
-        }
-
-        .book {
-            width: 30px;
-            height: 70px;
-            border-radius: 10px;
-        }
-
-        .book:nth-child(1) { background: #fef9c3; }
-        .book:nth-child(2) { background: #fecaca; height: 60px; }
-        .book:nth-child(3) { background: #bbf7d0; height: 80px; }
-        .book:nth-child(4) { background: #e0f2fe; height: 65px; }
-        .book:nth-child(5) { background: #f5d0fe; height: 75px; }
 
         .grid {
             display: grid;
@@ -95,14 +71,9 @@
             font-size: 18px;
         }
 
-        .card p {
-            margin: 0 0 12px;
-            color: #6b7280;
-            font-size: 14px;
-        }
-
         .card a {
             display: inline-block;
+            margin-top: 8px;
             padding: 8px 14px;
             background: #4b7bec;
             color: white;
@@ -122,46 +93,57 @@
             <h1>BrightQuest Library</h1>
         </div>
 
-        <section class="hero">
-            <div>
-                <h2>Explore Fun Learning Books</h2>
-                <p>Colorful stories, science adventures, math mysteries, and more — all safe and kid‑friendly.</p>
-            </div>
-            <div class="books">
-                <div class="book"></div>
-                <div class="book"></div>
-                <div class="book"></div>
-                <div class="book"></div>
-                <div class="book"></div>
-            </div>
-        </section>
-
+        <!-- Ages 7–10 -->
+        <div class="section-title">Ages 7–10</div>
         <section class="grid">
-            <div class="card">
-                <h3>Math Adventures</h3>
-                <p>Fun stories that teach numbers, patterns, and problem‑solving.</p>
-                <a href="#">Read</a>
-            </div>
-
-            <div class="card">
-                <h3>Science Explorers</h3>
-                <p>Discover animals, planets, weather, and experiments.</p>
-                <a href="#">Read</a>
-            </div>
-
-            <div class="card">
-                <h3>Word Wizards</h3>
-                <p>Boost vocabulary with magical stories and puzzles.</p>
-                <a href="#">Read</a>
-            </div>
-
-            <div class="card">
-                <h3>History Heroes</h3>
-                <p>Meet famous inventors, explorers, and legends.</p>
-                <a href="#">Read</a>
-            </div>
+            <div class="card"><h3>Alice’s Adventures in Wonderland</h3><a href="https://www.gutenberg.org/ebooks/11">Read</a></div>
+            <div class="card"><h3>The Wonderful Wizard of Oz</h3><a href="https://www.gutenberg.org/ebooks/55">Read</a></div>
+            <div class="card"><h3>Peter Pan</h3><a href="https://www.gutenberg.org/ebooks/16">Read</a></div>
+            <div class="card"><h3>The Velveteen Rabbit</h3><a href="https://www.gutenberg.org/ebooks/11757">Read</a></div>
+            <div class="card"><h3>Black Beauty</h3><a href="https://www.gutenberg.org/ebooks/271">Read</a></div>
+            <div class="card"><h3>The Secret Garden</h3><a href="https://www.gutenberg.org/ebooks/17396">Read</a></div>
+            <div class="card"><h3>A Little Princess</h3><a href="https://www.gutenberg.org/ebooks/146">Read</a></div>
+            <div class="card"><h3>Heidi</h3><a href="https://www.gutenberg.org/ebooks/1448">Read</a></div>
+            <div class="card"><h3>Pinocchio</h3><a href="https://www.gutenberg.org/ebooks/500">Read</a></div>
+            <div class="card"><h3>The Jungle Book</h3><a href="https://www.gutenberg.org/ebooks/236">Read</a></div>
         </section>
 
-    </div>
-</body>
-</html>
+        <!-- Ages 10–13 -->
+        <div class="section-title">Ages 10–13</div>
+        <section class="grid">
+            <div class="card"><h3>Treasure Island</h3><a href="https://www.gutenberg.org/ebooks/120">Read</a></div>
+            <div class="card"><h3>Kidnapped</h3><a href="https://www.gutenberg.org/ebooks/421">Read</a></div>
+            <div class="card"><h3>Tom Sawyer</h3><a href="https://www.gutenberg.org/ebooks/74">Read</a></div>
+            <div class="card"><h3>Huckleberry Finn</h3><a href="https://www.gutenberg.org/ebooks/76">Read</a></div>
+            <div class="card"><h3>Anne of Green Gables</h3><a href="https://www.gutenberg.org/ebooks/45">Read</a></div>
+            <div class="card"><h3>Little Women</h3><a href="https://www.gutenberg.org/ebooks/514">Read</a></div>
+            <div class="card"><h3>Five Children and It</h3><a href="https://www.gutenberg.org/ebooks/17434">Read</a></div>
+            <div class="card"><h3>The Railway Children</h3><a href="https://www.gutenberg.org/ebooks/1874">Read</a></div>
+            <div class="card"><h3>The Wind in the Willows</h3><a href="https://www.gutenberg.org/ebooks/27805">Read</a></div>
+            <div class="card"><h3>Pollyanna</h3><a href="https://www.gutenberg.org/ebooks/1450">Read</a></div>
+        </section>
+
+        <!-- Ages 13–17 -->
+        <div class="section-title">Ages 13–17</div>
+        <section class="grid">
+            <div class="card"><h3>Sherlock Holmes: A Study in Scarlet</h3><a href="https://www.gutenberg.org/ebooks/244">Read</a></div>
+            <div class="card"><h3>The Sign of Four</h3><a href="https://www.gutenberg.org/ebooks/2097">Read</a></div>
+            <div class="card"><h3>Sherlock Holmes Adventures</h3><a href="https://www.gutenberg.org/ebooks/1661">Read</a></div>
+            <div class="card"><h3>Dracula</h3><a href="https://www.gutenberg.org/ebooks/345">Read</a></div>
+            <div class="card"><h3>Frankenstein</h3><a href="https://www.gutenberg.org/ebooks/84">Read</a></div>
+            <div class="card"><h3>The Time Machine</h3><a href="https://www.gutenberg.org/ebooks/35">Read</a></div>
+            <div class="card"><h3>The War of the Worlds</h3><a href="https://www.gutenberg.org/ebooks/36">Read</a></div>
+            <div class="card"><h3>The Invisible Man</h3><a href="https://www.gutenberg.org/ebooks/5230">Read</a></div>
+            <div class="card"><h3>The Call of the Wild</h3><a href="https://www.gutenberg.org/ebooks/215">Read</a></div>
+            <div class="card"><h3>White Fang</h3><a href="https://www.gutenberg.org/ebooks/910">Read</a></div>
+        </section>
+
+        <!-- Ages 17+ -->
+        <div class="section-title">Ages 17+</div>
+        <section class="grid">
+            <div class="card"><h3>Pride and Prejudice</h3><a href="https://www.gutenberg.org/ebooks/1342">Read</a></div>
+            <div class="card"><h3>Sense and Sensibility</h3><a href="https://www.gutenberg.org/ebooks/161">Read</a></div>
+            <div class="card"><h3>Emma</h3><a href="https://www.gutenberg.org/ebooks/158">Read</a></div>
+            <div class="card"><h3>Jane Eyre</h3><a href="https://www.gutenberg.org/ebooks/1260">Read</a></div>
+            <div class="card"><h3>Wuthering Heights</h3><a href="https://www.gutenberg.org/ebooks/768">Read</a></div>
+            <div class="card"><h3>Great Expectations
