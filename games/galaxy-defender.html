@@ -4,10 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Defender</title>
+
+    <!-- Uses your existing global stylesheet -->
     <link rel="stylesheet" href="../css/styles.css">
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at top, #020617, #0f172a);
+            font-family: "Nunito", sans-serif;
+        }
+
+        #gameCanvas {
+            display: block;
+        }
+
+        .ui {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: 0 0 6px black;
+        }
+    </style>
 </head>
+
 <body>
     <canvas id="gameCanvas"></canvas>
+
+    <div class="ui">
+        <div>Galaxy Defender</div>
+        <div id="scoreDisplay">Score: 0</div>
+    </div>
+
+    <!-- Game logic -->
     <script src="../js/galaxy-defender.js"></script>
 </body>
 </html>
