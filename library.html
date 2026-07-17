@@ -1,47 +1,167 @@
-<section class="library-section">
-    <h1 class="library-title">BrightQuest Book Library</h1>
-    <p class="library-subtitle">Free public‑domain books for all ages</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrightQuest Library</title>
 
-    <!-- Age 4–7 -->
-    <div class="age-block">
-        <h2>Age 4–7 • Early Readers</h2>
-        <ul>
-            <li><a href="https://www.storyberries.com" target="_blank">Storyberries – Free Picture Books</a></li>
-            <li><a href="https://uniteforliteracy.com" target="_blank">Unite for Literacy – Picture Books</a></li>
-            <li><a href="https://www.magickeys.com/books" target="_blank">Magic Keys – Little Kids Stories</a></li>
-        </ul>
-    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Age 8–10 -->
-    <div class="age-block">
-        <h2>Age 8–10 • Beginner Chapter Books</h2>
-        <ul>
-            <li><a href="https://www.gutenberg.org/ebooks/14838" target="_blank">The Tale of Peter Rabbit</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/1298" target="_blank">The Velveteen Rabbit</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/168" target="_blank">The Adventures of Pinocchio</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/55" target="_blank">The Wonderful Wizard of Oz</a></li>
-        </ul>
-    </div>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Nunito", sans-serif;
+            background: radial-gradient(circle at top left, #e0f2fe, #fef3c7);
+            color: #1f2937;
+        }
 
-    <!-- Age 11–13 -->
-    <div class="age-block">
-        <h2>Age 11–13 • Intermediate Readers</h2>
-        <ul>
-            <li><a href="https://www.gutenberg.org/ebooks/11" target="_blank">Alice in Wonderland</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/236" target="_blank">The Jungle Book</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/120" target="_blank">Treasure Island</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/271" target="_blank">Black Beauty</a></li>
-        </ul>
-    </div>
+        .page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
 
-    <!-- Age 14+ -->
-    <div class="age-block">
-        <h2>Age 14+ • Advanced Readers</h2>
-        <ul>
-            <li><a href="https://www.gutenberg.org/ebooks/1661" target="_blank">Sherlock Holmes</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/35" target="_blank">The Time Machine</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/215" target="_blank">Call of the Wild</a></li>
-            <li><a href="https://www.gutenberg.org/ebooks/514" target="_blank">Little Women</a></li>
-        </ul>
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4b7bec, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Baloo 2";
+            font-size: 28px;
+            color: white;
+        }
+
+        .header h1 {
+            font-family: "Baloo 2";
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .hero {
+            background: white;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .books {
+            display: flex;
+            gap: 6px;
+        }
+
+        .book {
+            width: 30px;
+            height: 70px;
+            border-radius: 10px;
+        }
+
+        .book:nth-child(1) { background: #fef9c3; }
+        .book:nth-child(2) { background: #fecaca; height: 60px; }
+        .book:nth-child(3) { background: #bbf7d0; height: 80px; }
+        .book:nth-child(4) { background: #e0f2fe; height: 65px; }
+        .book:nth-child(5) { background: #f5d0fe; height: 75px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin: 0 0 6px;
+            font-size: 18px;
+        }
+
+        .card p {
+            margin: 0 0 12px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #4b7bec;
+            color: white;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+        <div class="header">
+            <div class="logo">BQ</div>
+            <h1>BrightQuest Library</h1>
+        </div>
+
+        <section class="hero">
+            <div>
+                <h2>Explore Fun Learning Books</h2>
+                <p>Colorful stories, science adventures, math mysteries, and more — all safe and kid‑friendly.</p>
+            </div>
+            <div class="books">
+                <div class="book"></div>
+                <div class="book"></div>
+                <div class="book"></div>
+                <div class="book"></div>
+                <div class="book"></div>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <h3>Math Adventures</h3>
+                <p>Fun stories that teach numbers, patterns, and problem‑solving.</p>
+                <a href="#">Read</a>
+            </div>
+
+            <div class="card">
+                <h3>Science Explorers</h3>
+                <p>Discover animals, planets, weather, and experiments.</p>
+                <a href="#">Read</a>
+            </div>
+
+            <div class="card">
+                <h3>Word Wizards</h3>
+                <p>Boost vocabulary with magical stories and puzzles.</p>
+                <a href="#">Read</a>
+            </div>
+
+            <div class="card">
+                <h3>History Heroes</h3>
+                <p>Meet famous inventors, explorers, and legends.</p>
+                <a href="#">Read</a>
+            </div>
+        </section>
+
     </div>
-</section>
+</body>
+</html>
