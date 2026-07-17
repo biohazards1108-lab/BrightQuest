@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Runner</title>
+
+    <!-- Global BrightQuest stylesheet -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(#0a0a16, #111122);
+            font-family: "Nunito", sans-serif;
+        }
+
+        #gameCanvas {
+            display: block;
+        }
+
+        .ui {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #00eaff;
+            font-size: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 6px black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="ui">
+        Cyber Runner<br>
+        <span id="scoreDisplay">Score: 0</span>
+    </div>
+
+    <!-- Game logic -->
+    <script src="../js/cyber-runner.js"></script>
+</body>
+</html>
