@@ -1,111 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BrightQuest</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <title>BrightQuest Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7ff;
+      --primary: #4b7bec;
+      --accent: #ffb74d;
+      --card-bg: #ffffff;
+      --text-main: #1f2933;
+      --text-muted: #6b7280;
+      --radius-lg: 18px;
+      --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Nunito", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top left, #e0f2fe 0, #f5f7ff 40%, #fef3c7 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 40px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .logo-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4b7bec, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: "Baloo 2", cursive;
+      font-size: 26px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .header-text h1 {
+      font-family: "Baloo 2", cursive;
+      font-size: 32px;
+      letter-spacing: 0.02em;
+    }
+
+    .header-text p {
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius-lg);
+      padding: 22px 22px 20px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 26px;
+    }
+
+    .hero-text h2 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .hero-text p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 420px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .hero-illustration {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .books-shelf {
+      width: 210px;
+      height: 120px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #4b7bec, #7c3aed);
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: flex-end;
+      gap: 4px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35);
+    }
+
+    .book {
+      height: 70px;
+      border-radius: 999px;
+      background: #fef9c3;
+      position: relative;
+    }
+
+    .book:nth-child(2) { background: #fecaca; height: 60px; }
+    .book:nth-child(3) { background: #bbf7d0; height: 80px; }
+    .book:nth-child(4) { background: #e0f2fe; height: 65px; }
+    .book:nth-child(5) { background: #f5d0fe; height: 75px; }
+
+    .book::before {
+      content: "";
+      position: absolute;
+      inset: 6px 8px;
+      border-radius: 999px;
+      border: 2px solid rgba(15, 23, 42, 0.12);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .section-title h3 {
+      font-size: 18px;
+    }
+
+    .section-title span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 11px;
+    }
+
+    .card button {
+      margin-top: 8px;
+      align-self: flex-start;
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .card button:hover {
+      transform: translateY(-1px);
+      background: #365ccf;
+    }
+
+    .card button:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.45);
+    }
+
+    .footer {
+      margin-top: 26px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
-
-<script>
-    const age = localStorage.getItem("ageGroup");
-    if (!age) window.location.href = "age-gate.html";
-</script>
-
 <body>
-
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <img src="assets/images/brightQuest-logo.png" alt="BrightQuest Logo" class="logo">
-            <h1 class="site-title">BrightQuest</h1>
-        </div>
-
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="games/games.html">Games</a></li>
-            <li><a href="learn.html">Learn</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="library.html">Book Library</a></li>
-        </ul>
-    </nav>
-
-    <!-- HERO SECTION -->
-    <header class="hero">
-        <h2>Welcome to BrightQuest!</h2>
-        <p>A fun and safe place for kids to learn, explore, and play games.</p>
-        <a href="games/games.html" class="cta-btn">Start Playing</a>
+  <div class="page">
+    <header class="header">
+      <div class="logo-badge">BQ</div>
+      <div class="header-text">
+        <h1>BrightQuest Library</h1>
+        <p>Safe, colorful adventures where kids read, think, and play their way through learning.</p>
+      </div>
     </header>
 
-    <!-- GAME PREVIEW SECTION -->
-    <section class="games-preview">
-        <h3>Featured Games</h3>
-
-        <div class="game-grid">
-
-            <!-- GAME CARD 1 -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Math Dash">
-                <h4>Math Dash</h4>
-                <p>Race against time to solve math puzzles.</p>
-                <a href="games/math-dash.html" class="play-btn">Play</a>
-            </div>
-
-            <!-- GAME CARD 2 -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Word Explorer">
-                <h4>Word Explorer</h4>
-                <p>Build vocabulary while exploring new worlds.</p>
-                <a href="games/word-explorer.html" class="play-btn">Play</a>
-            </div>
-
-            <!-- GAME CARD 3 -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Memory Quest">
-                <h4>Memory Quest</h4>
-                <p>Test your memory with fun challenges.</p>
-                <a href="games/memory-quest.html" class="play-btn">Play</a>
-            </div>
-
-            <!-- GAME CARD 4 -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Maze Runner">
-                <h4>Maze Runner</h4>
-                <p>Navigate the maze using the arrow keys and reach the goal.</p>
-                <a href="games/maze-runner.html" class="play-btn">Play</a>
-            </div>
-
-            <!-- GAME CARD 5 -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Color Match">
-                <h4>Color Match</h4>
-                <p>Tap the correct color as fast as you can!</p>
-                <a href="games/color-match.html" class="play-btn">Play</a>
-            </div>
-
-            <!-- SHAPE BUILDER -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Shape Builder">
-                <h4>Shape Builder</h4>
-                <p>Drag and drop shapes to complete fun puzzles!</p>
-                <a href="games/shape-builder.html" class="play-btn">Play</a>
-            </div>
-
-            <!-- NINJA ROPES -->
-            <div class="game-card">
-                <img src="assets/images/game-placeholder.png" alt="Ninja Ropes">
-                <h4>Ninja Ropes</h4>
-                <p>Sling the ninja upward to collect letters and spell words!</p>
-                <a href="games/ninja-ropes.html" class="play-btn">Play</a>
-            </div>
-
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Pick a quest and start exploring.</h2>
+        <p>
+          Every game in the BrightQuest Library is designed for curious kids—mixing reading, math,
+          memory, and problem‑solving into playful challenges.
+        </p>
+        <div class="hero-tag">
+          <span>⭐ Curated for ages 7–12</span>
         </div>
+      </div>
+      <div class="hero-illustration">
+        <div class="books-shelf">
+          <div class="book"></div>
+          <div class="book"></div>
+          <div class="book"></div>
+          <div class="book"></div>
+          <div class="book"></div>
+        </div>
+      </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>© 2026 BrightQuest — Learn. Play. Grow.</p>
-    </footer>
+    <div class="section-title">
+      <h3>Featured learning games</h3>
+      <span>Tap a card to jump into a new adventure.</span>
+    </div>
 
+    <section class="grid">
+      <article class="card">
+        <div class="card-label">Math • Speed</div>
+        <div class="card-title">Math Dash</div>
+        <p class="card-desc">Race against time to solve math puzzles and unlock new levels.</p>
+        <div class="card-meta">
+          <span>Difficulty: Easy–Medium</span>
+          <span class="pill">Numbers &amp; logic</span>
+        </div>
+        <button id="play-math-dash">Play Math Dash</button>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Words • Reading</div>
+        <div class="card-title">Word Explorer</div>
+        <p class="card-desc">Build vocabulary while exploring colorful worlds filled with hidden clues.</p>
+        <div class="card-meta">
+          <span>Difficulty: Easy</span>
+          <span class="pill">Vocabulary</span>
+        </div>
+        <button id="play-word-explorer">Play Word Explorer</button>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Memory • Focus</div>
+        <div class="card-title">Memory Quest</div>
+        <p class="card-desc">Test your memory with fun patterns, cards, and story‑based challenges.</p>
+        <div class="card-meta">
+          <span>Difficulty: Medium</span>
+          <span class="pill">Memory skills</span>
+        </div>
+        <button id="play-memory-quest">Play Memory Quest</button>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Movement • Strategy</div>
+        <div class="card-title">Maze Runner</div>
+        <p class="card-desc">Navigate the maze using the arrow keys and reach the glowing goal.</p>
+        <div class="card-meta">
+          <span>Difficulty: Medium</span>
+          <span class="pill">Spatial thinking</span>
+        </div>
+        <button id="play-maze-runner">Play Maze Runner</button>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Colors • Reflexes</div>
+        <div class="card-title">Color Match</div>
+        <p class="card-desc">Tap the correct color as fast as you can before the timer runs out.</p>
+        <div class="card-meta">
+          <span>Difficulty: Easy</span>
+          <span class="pill">Quick reactions</span>
+        </div>
+        <button id="play-color-match">Play Color Match</button>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Shapes • Puzzles</div>
+        <div class="card-title">Shape Builder</div>
+        <p class="card-desc">Drag and drop shapes to complete playful puzzle scenes.</p>
+        <div class="card-meta">
+          <span>Difficulty: Easy–Medium</span>
+          <span class="pill">Visual reasoning</span>
+        </div>
+        <button id="play-shape-builder">Play Shape Builder</button>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Words • Physics</div>
+        <div class="card-title">Ninja Ropes</div>
+        <p class="card-desc">Sling the ninja upward to collect letters and spell secret words.</p>
+        <div class="card-meta">
+          <span>Difficulty: Medium</span>
+          <span class="pill">Spelling &amp; timing</span>
+        </div>
+        <button id="play-ninja-ropes">Play Ninja Ropes</button>
+      </article>
+    </section>
+
+    <footer class="footer">
+      © 2026 BrightQuest — Learn. Play. Grow.
+    </footer>
+  </div>
+
+  <script>
+    // Wire buttons to your existing game pages
+    document.getElementById('play-math-dash').onclick = () =>
+      window.location.href = 'games/math-dash.html';
+
+    document.getElementById('play-word-explorer').onclick = () =>
+      window.location.href = 'games/word-explorer.html';
+
+    document.getElementById('play-memory-quest').onclick = () =>
+      window.location.href = 'games/memory-quest.html';
+
+    document.getElementById('play-maze-runner').onclick = () =>
+      window.location.href = 'games/maze-runner.html';
+
+    document.getElementById('play-color-match').onclick = () =>
+      window.location.href = 'games/color-match.html';
+
+    document.getElementById('play-shape-builder').onclick = () =>
+      window.location.href = 'games/shape-builder.html';
+
+    document.getElementById('play-ninja-ropes').onclick = () =>
+      window.location.href = 'games/ninja-ropes.html';
+  </script>
 </body>
 </html>
