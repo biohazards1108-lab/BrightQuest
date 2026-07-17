@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Labyrinth</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: #020617;
+            font-family: "Nunito", sans-serif;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            display: block;
+            margin: auto;
+            background: #0b1120;
+        }
+
+        .ui {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #38bdf8;
+            font-size: 18px;
+            font-weight: 700;
+            text-shadow: 0 0 6px black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui">
+        Logic Labyrinth<br>
+        <span id="statusDisplay">Reach the exit. Switches open gates.</span>
+    </div>
+
+    <canvas id="gameCanvas" width="640" height="640"></canvas>
+
+    <script src="../js/logic-labyrinth.js"></script>
+</body>
+</html>
