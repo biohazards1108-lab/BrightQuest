@@ -1,8 +1,9 @@
 body {
     margin: 0;
     overflow: hidden;
-    background: linear-gradient(#4b7bec, #7c3aed);
-    font-family: "Nunito", sans-serif;
+    font-family: "Nunito", system-ui, sans-serif;
+    background: radial-gradient(circle at top, #1e293b, #020617);
+    color: #f9fafb;
 }
 
 #gameCanvas {
@@ -11,14 +12,58 @@ body {
 
 .ui {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    color: white;
-    font-size: 18px;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    pointer-events: none;
 }
 
-#wordDisplay {
-    margin-top: 10px;
+.ui-top h2 {
+    margin: 0;
     font-size: 24px;
-    font-weight: bold;
+}
+
+.ui-top p {
+    margin: 4px 0 10px;
+    font-size: 14px;
+    color: #cbd5f5;
+}
+
+.ui-middle, .ui-bottom {
+    margin-top: 8px;
+}
+
+.label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+}
+
+#targetWord, #collectedWord {
+    margin-top: 4px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stats {
+    margin-top: 6px;
+    font-size: 13px;
+    display: flex;
+    gap: 12px;
+    color: #e5e7eb;
+}
+
+/* HUD pill style */
+.stats span {
+    background: rgba(15, 23, 42, 0.7);
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+/* Mobile hint (optional) */
+@media (max-width: 600px) {
+    .ui-top p {
+        font-size: 13px;
+    }
 }
