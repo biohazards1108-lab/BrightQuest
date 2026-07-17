@@ -6,33 +6,20 @@
     <title>BrightQuest | Games</title>
 
     <link rel="stylesheet" href="../css/styles.css">
-
     <style>
         body {
             margin: 0;
             font-family: "Nunito", sans-serif;
             background: radial-gradient(circle at top left, #e0f2fe, #fef3c7);
         }
-
-        .page {
-            max-width: 1100px;
-            margin: auto;
-            padding: 30px 20px;
-        }
-
-        h1 {
-            font-family: "Baloo 2";
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
+        .page { max-width: 1100px; margin: auto; padding: 30px 20px; }
+        h1 { font-family: "Baloo 2"; font-size: 36px; text-align: center; margin-bottom: 20px; }
+        .section-title { margin: 20px 0 10px; font-size: 22px; font-weight: 700; }
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
-
         .game-card {
             background: white;
             padding: 16px;
@@ -40,23 +27,9 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             text-align: center;
         }
-
-        .game-card img {
-            width: 100%;
-            border-radius: 12px;
-        }
-
-        .game-card h3 {
-            margin: 10px 0 6px;
-            font-size: 20px;
-        }
-
-        .game-card p {
-            font-size: 14px;
-            color: #374151;
-            margin-bottom: 10px;
-        }
-
+        .game-card img { width: 100%; border-radius: 12px; }
+        .game-card h3 { margin: 10px 0 6px; font-size: 20px; }
+        .game-card p { font-size: 14px; color: #374151; margin-bottom: 10px; }
         .play-btn {
             display: inline-block;
             padding: 8px 14px;
@@ -68,78 +41,133 @@
         }
     </style>
 </head>
-
 <body>
     <div class="page">
-
         <h1>BrightQuest Games</h1>
 
+        <div class="section-title">Core Games</div>
         <div class="game-grid">
-
-            <!-- Math Dash -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Math Dash">
                 <h3>Math Dash</h3>
                 <p>Race against time to solve math puzzles.</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/math-dash.html" class="play-btn">Play</a>
+                <a href="math-dash.html" class="play-btn">Play</a>
             </div>
 
-            <!-- Word Explorer -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Word Explorer">
                 <h3>Word Explorer</h3>
                 <p>Build vocabulary while exploring new worlds.</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/word-explorer.html" class="play-btn">Play</a>
+                <a href="word-explorer.html" class="play-btn">Play</a>
             </div>
 
-            <!-- Memory Quest -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Memory Quest">
                 <h3>Memory Quest</h3>
                 <p>Test your memory with fun challenges.</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/memory-quest.html" class="play-btn">Play</a>
+                <a href="memory-quest.html" class="play-btn">Play</a>
             </div>
 
-            <!-- Maze Runner -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Maze Runner">
                 <h3>Maze Runner</h3>
                 <p>Navigate the maze using the arrow keys.</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/maze-runner.html" class="play-btn">Play</a>
+                <a href="maze-runner.html" class="play-btn">Play</a>
             </div>
 
-            <!-- Color Match -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Color Match">
                 <h3>Color Match</h3>
                 <p>Tap the correct color as fast as you can!</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/color-match.html" class="play-btn">Play</a>
+                <a href="color-match.html" class="play-btn">Play</a>
             </div>
 
-            <!-- Shape Builder -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Shape Builder">
                 <h3>Shape Builder</h3>
                 <p>Drag and drop shapes to complete puzzles.</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/shape-builder.html" class="play-btn">Play</a>
+                <a href="shape-builder.html" class="play-btn">Play</a>
             </div>
 
-            <!-- Ninja Ropes -->
             <div class="game-card">
                 <img src="../assets/images/game-placeholder.png" alt="Ninja Ropes">
                 <h3>Ninja Ropes</h3>
                 <p>Swing, climb, and collect letters to spell words!</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/ninja-ropes.html" class="play-btn">Play</a>
+                <a href="ninja-ropes.html" class="play-btn">Play</a>
             </div>
+        </div>
 
-            <!-- Games Menu (optional) -->
+        <div class="section-title">Advanced Games (Older Kids & Teens)</div>
+        <div class="game-grid">
             <div class="game-card">
-                <img src="../assets/images/game-placeholder.png" alt="Games Menu">
-                <h3>Games Menu</h3>
-                <p>Browse all BrightQuest games.</p>
-                <a href="https://biohazards1108-lab.github.io/BrightQuest/games/games.html" class="play-btn">Open</a>
+                <img src="../assets/images/game-placeholder.png" alt="Galaxy Defender">
+                <h3>Galaxy Defender</h3>
+                <p>Defend the galaxy from waves of enemies.</p>
+                <a href="galaxy-defender.html" class="play-btn">Play</a>
             </div>
 
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Cyber Runner">
+                <h3>Cyber Runner</h3>
+                <p>Dodge obstacles in a fast-paced neon world.</p>
+                <a href="cyber-runner.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Logic Labyrinth">
+                <h3>Logic Labyrinth</h3>
+                <p>Solve complex maze puzzles with switches and gates.</p>
+                <a href="logic-labyrinth.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Code Breaker">
+                <h3>Code Breaker</h3>
+                <p>Crack secret codes using pattern recognition.</p>
+                <a href="code-breaker.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Gravity Shift">
+                <h3>Gravity Shift</h3>
+                <p>Flip gravity to navigate tricky platform levels.</p>
+                <a href="gravity-shift.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Dungeon Escape">
+                <h3>Dungeon Escape</h3>
+                <p>Plan your moves to escape traps and monsters.</p>
+                <a href="dungeon-escape.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Starship Engineer">
+                <h3>Starship Engineer</h3>
+                <p>Manage ship systems and survive space hazards.</p>
+                <a href="starship-engineer.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Quantum Chess">
+                <h3>Quantum Chess</h3>
+                <p>Play chess with portals and special powers.</p>
+                <a href="quantum-chess.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Tower Tactics">
+                <h3>Tower Tactics</h3>
+                <p>Build towers and defend against enemy waves.</p>
+                <a href="tower-tactics.html" class="play-btn">Play</a>
+            </div>
+
+            <div class="game-card">
+                <img src="../assets/images/game-placeholder.png" alt="Pixel Racer">
+                <h3>Pixel Racer</h3>
+                <p>Race, drift, and beat your best lap times.</p>
+                <a href="pixel-racer.html" class="play-btn">Play</a>
+            </div>
         </div>
     </div>
 </body>
