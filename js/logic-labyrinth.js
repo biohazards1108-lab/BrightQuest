@@ -1,4 +1,4 @@
-// logic-labyrinth.js
+// logic-labyrinth.js (fixed version)
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -20,7 +20,6 @@ window.addEventListener("keydown", e => {
 });
 window.addEventListener("keyup", e => { keys[e.key] = false; });
 
-// Mobile tap movement
 canvas.addEventListener("click", e => {
     const rect = canvas.getBoundingClientRect();
     const x = Math.floor((e.clientX - rect.left) / TILE);
@@ -28,48 +27,94 @@ canvas.addEventListener("click", e => {
     moveTowards(x, y);
 });
 
-function initGrid() {
-    grid = [];
-    for (let y = 0; y < GRID; y++) {
-        const row = [];
-        for (let x = 0; x < GRID; x++) {
-            // 1 = wall, 0 = floor
-            const border = (x === 0 || y === 0 || x === GRID - 1 || y === GRID - 1);
-            row.push(border ? 1 : (Math.random() < 0.2 ? 1 : 0));
+// ------------------------------------------------------------
+// PERFECT MAZE GENERATOR (DFS)
+// ------------------------------------------------------------
+function generateMaze() {
+    grid = Array(GRID).fill(0).map(() => Array(GRID).fill(1)); // all walls
+
+    function carve(x, y) {
+        const dirs = [
+            [2, 0], [-2, 0], [0, 2], [0, -2]
+        ].sort(() => Math.random() - 0.5);
+
+        grid[y][x] = 0;
+
+        for (const [dx, dy] of dirs) {
+            const nx = x + dx;
+            const ny = y + dy;
+
+            if (nx > 0 && ny > 0 && nx < GRID - 1 && ny < GRID - 1) {
+                if (grid[ny][nx] === 1) {
+                    grid[y + dy / 2][x + dx / 2] = 0;
+                    carve(nx, ny);
+                }
+            }
         }
-        grid.push(row);
     }
 
-    // Clear start and exit
-    grid[player.y][player.x] = 0;
-    grid[exit.y][exit.x] = 0;
+    carve(1, 1);
+}
 
-    // Generate switches and gates
+// ------------------------------------------------------------
+// SWITCHES + GATES (always solvable)
+// ------------------------------------------------------------
+function placeSwitchesAndGates() {
     switches = [];
     gates = [];
 
     for (let i = 0; i < 4; i++) {
-        const sx = 2 + Math.floor(Math.random() * (GRID - 4));
-        const sy = 2 + Math.floor(Math.random() * (GRID - 4));
-        const gx = 2 + Math.floor(Math.random() * (GRID - 4));
-        const gy = 2 + Math.floor(Math.random() * (GRID - 4));
+        let sx, sy, gx, gy;
+
+        // Find valid switch tile
+        do {
+            sx = 1 + Math.floor(Math.random() * (GRID - 2));
+            sy = 1 + Math.floor(Math.random() * (GRID - 2));
+        } while (grid[sy][sx] !== 0 || (sx === player.x && sy === player.y));
+
+        // Find valid gate tile (must be a wall next to a path)
+        do {
+            gx = 1 + Math.floor(Math.random() * (GRID - 2));
+            gy = 1 + Math.floor(Math.random() * (GRID - 2));
+        } while (
+            grid[gy][gx] !== 1 ||
+            (gx === exit.x && gy === exit.y) ||
+            !hasAdjacentFloor(gx, gy)
+        );
 
         switches.push({ x: sx, y: sy, active: false });
         gates.push({ x: gx, y: gy, open: false });
-
-        grid[sy][sx] = 0; // ensure floor under switch
-        grid[gy][gx] = 1; // gate starts as wall
     }
 }
 
+function hasAdjacentFloor(x, y) {
+    return (
+        (grid[y][x - 1] === 0) ||
+        (grid[y][x + 1] === 0) ||
+        (grid[y - 1][x] === 0) ||
+        (grid[y + 1][x] === 0)
+    );
+}
+
+// ------------------------------------------------------------
+// GAME RESET
+// ------------------------------------------------------------
 function resetGame() {
     player = { x: 1, y: 1 };
     exit = { x: GRID - 2, y: GRID - 2 };
-    initGrid();
+
+    generateMaze();
+    grid[exit.y][exit.x] = 0;
+
+    placeSwitchesAndGates();
+
     statusDisplay.textContent = "Reach the exit. Switches open gates.";
     draw();
 }
 
+// ------------------------------------------------------------
+// MOVEMENT
+// ------------------------------------------------------------
 function handleInput(key) {
     let dx = 0, dy = 0;
     if (key === "ArrowUp" || key === "w") dy = -1;
@@ -90,21 +135,23 @@ function moveTowards(tx, ty) {
 
 function tryMove(nx, ny) {
     if (nx < 0 || ny < 0 || nx >= GRID || ny >= GRID) return;
-    if (grid[ny][nx] === 1) return; // wall or closed gate
+
+    // Gate check
+    const gateIndex = gates.findIndex(g => g.x === nx && g.y === ny && !g.open);
+    if (gateIndex !== -1) return;
+
+    if (grid[ny][nx] === 1) return;
 
     player.x = nx;
     player.y = ny;
 
-    // Check switches
     switches.forEach((s, i) => {
         if (s.x === player.x && s.y === player.y && !s.active) {
             s.active = true;
             gates[i].open = true;
-            grid[gates[i].y][gates[i].x] = 0; // open gate
         }
     });
 
-    // Check exit
     if (player.x === exit.x && player.y === exit.y) {
         statusDisplay.textContent = "You escaped! New maze generated.";
         setTimeout(resetGame, 800);
@@ -113,33 +160,24 @@ function tryMove(nx, ny) {
     draw();
 }
 
+// ------------------------------------------------------------
+// DRAW
+// ------------------------------------------------------------
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Background
-    ctx.fillStyle = "#020617";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Grid
     for (let y = 0; y < GRID; y++) {
         for (let x = 0; x < GRID; x++) {
-            const tile = grid[y][x];
-            if (tile === 1) {
-                ctx.fillStyle = "#1e293b";
-            } else {
-                ctx.fillStyle = "#0f172a";
-            }
+            ctx.fillStyle = grid[y][x] === 1 ? "#1e293b" : "#0f172a";
             ctx.fillRect(x * TILE, y * TILE, TILE, TILE);
         }
     }
 
-    // Gates
     gates.forEach(g => {
         ctx.fillStyle = g.open ? "#22c55e" : "#ef4444";
         ctx.fillRect(g.x * TILE, g.y * TILE, TILE, TILE);
     });
 
-    // Switches
     switches.forEach(s => {
         ctx.fillStyle = s.active ? "#22c55e" : "#eab308";
         ctx.beginPath();
@@ -147,16 +185,13 @@ function draw() {
         ctx.fill();
     });
 
-    // Exit
     ctx.fillStyle = "#38bdf8";
     ctx.fillRect(exit.x * TILE + 8, exit.y * TILE + 8, TILE - 16, TILE - 16);
 
-    // Player
     ctx.fillStyle = "#f97316";
     ctx.beginPath();
     ctx.arc(player.x * TILE + TILE / 2, player.y * TILE + TILE / 2, TILE / 3, 0, Math.PI * 2);
     ctx.fill();
 }
 
-// Start
 resetGame();
