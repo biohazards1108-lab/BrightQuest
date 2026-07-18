@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gravity Shift | BrightQuest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      background: #050a1a;
+      color: #fff;
+      font-family: "Segoe UI", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: #0b1120;
+      border-bottom: 2px solid #1f2937;
+    }
+
+    header img {
+      height: 60px;
+      border-radius: 6px;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    #gameCanvas {
+      display: block;
+      margin: 20px auto;
+      background: radial-gradient(circle at center, #0b1120 0, #000 100%);
+      border: 3px solid #374151;
+      border-radius: 10px;
+    }
+
+    #ui {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 220px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      border: 1px solid #1f2937;
+      font-size: 0.9rem;
+    }
+
+    #ui h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #93c5fd;
+    }
+
+    .ui-row {
+      margin-bottom: 8px;
+    }
+
+    .label {
+      color: #9ca3af;
+    }
+
+    .value {
+      float: right;
+      color: #fbbf24;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 6px;
+      padding: 6px 8px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 0 4px rgba(59, 130, 246, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Place this file in BrightQuest/games/gravity-shift-logo.png -->
+    <img src="gravity-shift-logo.png" alt="Gravity Shift Logo">
+    <h1>Gravity Shift</h1>
+  </header>
+
+  <canvas id="gameCanvas" width="960" height="540"></canvas>
+
+  <div id="ui">
+    <h3>Gravity Shift HUD</h3>
+
+    <div class="ui-row">
+      <span class="label">Level</span>
+      <span class="value" id="levelDisplay">1</span>
+    </div>
+
+    <div class="ui-row">
+      <span class="label">Score</span>
+      <span class="value" id="scoreDisplay">0</span>
+    </div>
+
+    <div class="ui-row">
+      <span class="label">Gravity Mode</span>
+      <span class="value" id="gravityModeDisplay">Normal</span>
+    </div>
+
+    <button class="btn" onclick="toggleGravityMode()">Toggle Gravity</button>
+  </div>
+
+  <!-- Place this file in BrightQuest/games/gravity-shift.js -->
+  <script src="gravity-shift.js"></script>
+</body>
+</html>
