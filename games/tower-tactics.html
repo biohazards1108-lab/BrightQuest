@@ -1,153 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tower Tactics</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Tower Tactics | BrightQuest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1b3b6b 0, #050814 55%, #02030a 100%);
-      color: #f5f5f5;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 16px;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    header img {
-      height: 48px;
-    }
-    .profile-bar {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      font-size: 14px;
-    }
-    .profile-bar button {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      background: linear-gradient(135deg, #4fd1ff, #7f5dff);
-      color: #050814;
-      font-weight: 600;
-    }
-    main {
-      display: grid;
-      grid-template-columns: 260px 1fr 260px;
-      gap: 8px;
-      flex: 1;
-      padding: 8px;
-    }
-    .panel {
-      background: rgba(0, 0, 0, 0.45);
-      border-radius: 12px;
-      padding: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #0a0f1a;
+      color: white;
+      font-family: Arial, sans-serif;
       overflow: hidden;
     }
-    #gameCanvas {
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #1b3b6b 0, #050814 60%, #000000 100%);
-      border-radius: 12px;
-      display: block;
-    }
-    .panel h2 {
-      margin: 0 0 8px;
-      font-size: 16px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #9fd8ff;
-    }
-    .tower-list, .enemy-list, .shop-list, .achievement-list {
-      max-height: 40vh;
-      overflow-y: auto;
-      font-size: 13px;
-    }
-    .item-row {
+    header {
+      padding: 10px;
+      background: #111827;
+      border-bottom: 2px solid #1f2937;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 4px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      gap: 10px;
     }
-    .item-row button {
-      padding: 3px 8px;
-      border-radius: 999px;
+    header img {
+      height: 50px;
+    }
+    #gameCanvas {
+      display: block;
+      margin: auto;
+      background: #1a2332;
+      border: 3px solid #374151;
+      border-radius: 10px;
+    }
+    #ui {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.4);
+      padding: 10px;
+      border-radius: 8px;
+      width: 200px;
+    }
+    .tower-btn {
+      width: 100%;
+      margin-bottom: 6px;
+      padding: 6px;
+      background: #2563eb;
       border: none;
+      color: white;
+      border-radius: 6px;
       cursor: pointer;
-      background: rgba(79, 209, 255, 0.15);
-      color: #4fd1ff;
-      font-size: 11px;
-    }
-    .token-display {
-      font-size: 13px;
-      margin-top: 4px;
-    }
-    footer {
-      padding: 6px 12px;
-      font-size: 11px;
-      text-align: right;
-      background: rgba(0, 0, 0, 0.4);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
   </style>
 </head>
+
 <body>
   <header>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <img src="logo.svg" alt="Tower Tactics Logo" />
-      <div>
-        <div style="font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Tower Tactics</div>
-        <div style="font-size:11px;color:#9fd8ff;">Strategic tower defense with profiles, achievements & cosmetics</div>
-      </div>
-    </div>
-    <div class="profile-bar">
-      <span id="profileName">Guest</span>
-      <button id="loginBtn">Login</button>
-      <button id="logoutBtn" style="display:none;">Logout</button>
-    </div>
+    <img id="logo" alt="Tower Tactics Logo">
+    <h1>Tower Tactics</h1>
   </header>
 
-  <main>
-    <section class="panel">
-      <h2>Towers</h2>
-      <div class="tower-list" id="towerList"></div>
+  <canvas id="gameCanvas" width="960" height="540"></canvas>
 
-      <h2 style="margin-top:12px;">Enemies</h2>
-      <div class="enemy-list" id="enemyList"></div>
-    </section>
+  <div id="ui">
+    <h3>Towers</h3>
+    <button class="tower-btn" onclick="selectTower('arrow')">Arrow Tower</button>
+    <button class="tower-btn" onclick="selectTower('pulse')">Pulse Tower</button>
+    <button class="tower-btn" onclick="selectTower('rail')">Railgun Tower</button>
+  </div>
 
-    <section class="panel">
-      <canvas id="gameCanvas" width="960" height="540"></canvas>
-    </section>
-
-    <section class="panel">
-      <h2>Shop</h2>
-      <div class="token-display">
-        Tokens: <span id="tokenCount">0</span>
-      </div>
-      <div class="shop-list" id="shopList"></div>
-
-      <h2 style="margin-top:12px;">Achievements</h2>
-      <div class="achievement-list" id="achievementList"></div>
-    </section>
-  </main>
-
-  <footer>
-    Tower Tactics &mdash; v0.1 prototype &bull; Front-end only, backend via Express/Python/Railway planned.
-  </footer>
-
-  <script src="game.js"></script>
+  <script src="tower-tactics.js"></script>
 </body>
 </html>
